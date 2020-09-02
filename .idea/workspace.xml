@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="245c3b0e-634b-46aa-9e3b-0514fed3471c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/bootstrap-modal.component.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/pagination.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/search.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/search.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/serviceWorker.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,22 +75,42 @@
       <updated>1598340022388</updated>
       <workItem from="1598340024598" duration="40667000" />
       <workItem from="1598876579098" duration="41449000" />
-      <workItem from="1598997025244" duration="9494000" />
+      <workItem from="1598997025244" duration="9771000" />
     </task>
+    <task id="LOCAL-00001" summary="use fetch for get results from api and bootstrap for ui">
+      <created>1599006718430</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1599006718430</updated>
+    </task>
+    <task id="LOCAL-00002" summary="add modal(that create by react-bootstrap-modal)  for show post detail">
+      <created>1599006806944</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1599006806944</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="use fetch for get results from api and bootstrap for ui" />
+    <MESSAGE value="add modal(that create by react-bootstrap-modal)  for show post detail" />
+    <option name="LAST_COMMIT_MESSAGE" value="add modal(that create by react-bootstrap-modal)  for show post detail" />
   </component>
   <component name="WindowStateProjectService">
     <state x="275" y="22" key="#ESLint" timestamp="1598857634349">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="22" key="#ESLint/0.0.1366.728@0.0.1366.728" timestamp="1598857634349" />
-    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1599006716318">
+    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1599006805359">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1599006716318" />
+    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1599006805359" />
     <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1599006340516">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
