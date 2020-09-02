@@ -23,23 +23,12 @@ class Pagination extends Component {
         this.pageNeighbours = typeof pageNeighbours === 'number' ?
             Math.max(0, Math.min(2, pageNeighbours)) : 0;
         this.totalPages = Math.ceil(this.totalRecords / this.pageLimit);
-        console.log(this.totalRecords + "innnnnnnnn" + this.pageLimit + "ddddddddd" + this.totalPages);
-        this.state = {currentPage: 1 , totalRecords:0, totalPages : 0};
+        this.state = {currentPage: 1, totalRecords: 0, totalPages: 0};
     }
 
-
-
     static getDerivedStateFromProps(props, state) {
-            return { totalRecords: props.totalRecords, totalPages:Math.ceil(props.totalRecords/props.pageLimit) };
-     }
-    // componentDidUpdate(prevProps) {
-    //     if (this.props.totalRecords != prevProps.totalRecords) {
-    //         this.setState({
-    //             totalRecords: this.props.totalRecords,
-    //         })
-    //     }
-    // }
-
+        return {totalRecords: props.totalRecords, totalPages: Math.ceil(props.totalRecords / props.pageLimit)};
+    }
 
     fetchPageNumbers = () => {
         const totalPages = this.state.totalPages;
@@ -56,8 +45,7 @@ class Pagination extends Component {
             const spillOffset = totalNumbers - (pages.length + 1);
             switch (true) {
                 case (hasLeftSpill && !hasRightSpill): {
-                    const
-                    extraPages   = range(startPage - spillOffset, startPage - 1);
+                    const extraPages = range(startPage - spillOffset, startPage - 1);
                     pages = [LEFT_PAGE, ...extraPages, ...pages];
                     break;
                 }
@@ -78,7 +66,6 @@ class Pagination extends Component {
     }
 
     render() {
-        console.log(this.state.totalRecords+"this is total record in childsssssssssssssssssssssss");
         let totalRecords = this.state.totalRecords;
         let totalPages = this.state.totalPages;
         if (!totalRecords || totalPages === 1) return null;
@@ -163,12 +150,5 @@ class Pagination extends Component {
 
 
 }
-
-// Pagination.prototype = {
-//     totalRecords: PropTypes.number.isRequired,
-//     pageLimit: PropTypes.number,
-//     pageNeighbours: PropTypes.number,
-//     onPageChanged: PropTypes.func
-// };
 
 export default Pagination;

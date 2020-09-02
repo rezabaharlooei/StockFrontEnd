@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import MyModalComponent from './bootstrap-modal.component.js';
+import MyModalComponent from './modal.js';
 import Pagination from './pagination.js'
 
 
@@ -31,16 +31,9 @@ class Search extends Component {
       };
     }
 
-
-
-
     componentDidMount() {
-        console.log("before did mount ")
          this.makeApiCall(this.backendUri + this.searchApi);
-        console.log(this.state.response.count+' this is in after Mouuuuuuuuuunt');
     }
-
-
 
     handleShow = (event, post) => {
 
@@ -151,25 +144,10 @@ class Search extends Component {
 
 
     render() {
-        //  const pageCount = (this.state.response.count / 10) + 1;
-        // const paginationPageNumberItems = [];
-        // for (var i = 1; i <= pageCount; i++) {
-        //     paginationPageNumberItems.push(<li className="page-item"><a className="page-link" href='#'
-        //                                                               //  onClick={(event) => this.handlePageOnClick(event, i)}
-        //     >{i}</a></li>)
-
         let totalPosts = this.state.totalPosts;
-         console.log(this.state.totalPosts == 0 +' bbbbbbbbbbbbbbbbb');
         if (totalPosts === 0) return null;
         const {currentPage, totalPages} = this.state;
-
-
-        console.log(totalPosts + 'dar searchchchhchc');
-        console.log(totalPages+"totalPages in search component");
-        console.log(this.state.response+'response in search component');
-        // }
         const style = totalPosts > 2 ? {} : {display: 'none'};
-
 
         const headerClass = ['text-dark py-2 pr-4 m-0', currentPage ? 'border-gray border-right' : ''].join(' ').trim();
         return (
@@ -327,36 +305,28 @@ class Search extends Component {
 
                 </div>
 
-                <div className="w-100 px-4 py-5 d-flex flex-row flex-wrap align-items-center justify-content-between"
-                     style={style}>
-                    <div className="d-flex flex-row align-items-center">
-                        <h2 className={headerClass}>
-                            <strong className="text-secondary">{totalPosts}</strong> Posts
-                        </h2>
-                        {currentPage && (
-                            <span className="current-page d-inline-block h-100 pl-4 text-secondary">
-                              Page <span className="font-weight-bold">{currentPage}</span> / <span
-                                className="font-weight-bold">{totalPages}</span>
-                            </span>
-                        )}
+                <div id='footer' className="container p-3 my-3 border">
+                    <div className="w-100 px-4 py-5 d-flex flex-row flex-wrap align-items-center justify-content-between"
+                         style={style}>
+                        <div className="d-flex flex-row align-items-center">
+                            <h2 className={headerClass}>
+                                <strong className="text-secondary">{totalPosts}</strong> Posts
+                            </h2>
+                            {currentPage && (
+                                <span className="current-page d-inline-block h-100 pl-4 text-secondary">
+                                  Page <span className="font-weight-bold">{currentPage}</span> / <span
+                                    className="font-weight-bold">{totalPages}</span>
+                                </span>
+                            )}
 
-                    </div>
+                        </div>
 
-                    <div className="d-flex flex-row py-4 align-items-center">
-                        {console.log("rerender chillllllllllllllddddddddd")}
-                        <Pagination totalRecords={totalPosts} pageNeighbours={1} pageLimit={2}
-                                    onPageChanged={this.onPageChanged}/>
+                        <div className="d-flex flex-row py-4 align-items-center">
+                            <Pagination totalRecords={totalPosts} pageNeighbours={1} pageLimit={2}
+                                        onPageChanged={this.onPageChanged}/>
+                        </div>
                     </div>
                 </div>
-
-
-                {/*<div id='footer' className="container p-3 my-3 border" style={style}>*/}
-                {/*    <ul className="pagination justify-content-center">*/}
-                {/*        <li className="page-item"><a className="page-link" href="#">Previous</a></li>*/}
-                {/*        {paginationPageNumberItems}*/}
-                {/*        <li className="page-item"><a className="page-link" href="#">Next</a></li>*/}
-                {/*    </ul>*/}
-                {/*</div>*/}
 
             </div>
 

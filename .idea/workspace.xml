@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="245c3b0e-634b-46aa-9e3b-0514fed3471c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/pagination.js" afterDir="false" />
+    <list default="true" id="245c3b0e-634b-46aa-9e3b-0514fed3471c" name="Default Changelist" comment="add custom pagination component for paginate search result">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bootstrap-modal.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pagination.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pagination.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/search.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +78,7 @@
       <updated>1598340022388</updated>
       <workItem from="1598340024598" duration="40667000" />
       <workItem from="1598876579098" duration="41449000" />
-      <workItem from="1598997025244" duration="9771000" />
+      <workItem from="1598997025244" duration="10317000" />
     </task>
     <task id="LOCAL-00001" summary="use fetch for get results from api and bootstrap for ui">
       <created>1599006718430</created>
@@ -91,7 +94,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599006806944</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="add custom pagination component for paginate search result">
+      <created>1599006917849</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1599006917849</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -100,17 +110,22 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="use fetch for get results from api and bootstrap for ui" />
     <MESSAGE value="add modal(that create by react-bootstrap-modal)  for show post detail" />
-    <option name="LAST_COMMIT_MESSAGE" value="add modal(that create by react-bootstrap-modal)  for show post detail" />
+    <MESSAGE value="add custom pagination component for paginate search result" />
+    <option name="LAST_COMMIT_MESSAGE" value="add custom pagination component for paginate search result" />
   </component>
   <component name="WindowStateProjectService">
     <state x="275" y="22" key="#ESLint" timestamp="1598857634349">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="22" key="#ESLint/0.0.1366.728@0.0.1366.728" timestamp="1598857634349" />
-    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1599006805359">
+    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1599007462168">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1599006805359" />
+    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1599007462168" />
+    <state x="183" y="54" key="DiffContextDialog" timestamp="1599006825129">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="183" y="54" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1599006825129" />
     <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1599006340516">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -183,10 +198,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="6" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1598342396042" />
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1599006584051">
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1599006943259">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1599006584051" />
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1599006943259" />
     <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1598882396337">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
