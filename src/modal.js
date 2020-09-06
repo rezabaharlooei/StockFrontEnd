@@ -1,4 +1,4 @@
-// src/components/bootstrap-carousel.component.js
+
 import React, {Component} from "react";
 
 import {Modal, Button} from 'react-bootstrap';
@@ -71,9 +71,8 @@ class MyModalComponent extends Component {
                             </div>
                         </div>
                         <div className='row'>
-                            <div className="col-sm-12">
-                                <li className="list-group-item">Content: <span
-                                    className="badge">{this.props.data.content}</span></li>
+                            <div className="col-sm-12" >
+                               <div className="text">{this.props.data.content}</div>
                             </div>
                         </div>
                         <ul>

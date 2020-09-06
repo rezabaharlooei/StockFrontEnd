@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from "react";
-import PropTypes from 'prop-types'
+
 
 
 const LEFT_PAGE = 'LEFT';
@@ -17,7 +17,7 @@ const range = (from, to, step = 1) => {
 class Pagination extends Component {
     constructor(props) {
         super(props);
-        var {totalRecords = null, pageLimit = 2, pageNeighbours = 0} = props;
+        var {totalRecords = null, pageLimit = 20, pageNeighbours = 0} = props;
         this.pageLimit = typeof pageLimit === 'number' ? pageLimit : 10;
         this.totalRecords = typeof totalRecords === 'number' ? totalRecords : 0;
         this.pageNeighbours = typeof pageNeighbours === 'number' ?
@@ -26,8 +26,11 @@ class Pagination extends Component {
         this.state = {currentPage: 1, totalRecords: 0, totalPages: 0};
     }
 
-    static getDerivedStateFromProps(props, state) {
-        return {totalRecords: props.totalRecords, totalPages: Math.ceil(props.totalRecords / props.pageLimit)};
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.totalRecords !== prevState.totalRecords){
+              return {totalRecords: nextProps.totalRecords, totalPages: Math.ceil(nextProps.totalRecords / nextProps.pageLimit), currentPage : 1};
+        }
+        return {totalRecords: nextProps.totalRecords, totalPages: Math.ceil(nextProps.totalRecords / nextProps.pageLimit)};
     }
 
     fetchPageNumbers = () => {
@@ -121,7 +124,10 @@ class Pagination extends Component {
     gotoPage = page => {
         const {onPageChanged = f => f} = this.props;
 
-        const currentPage = Math.max(0, Math.min(page, this.totalPages));
+        const currentPage = Math.max(0, page);
+        console.log("currentPage= " +currentPage);
+        console.log("page= "+page);
+        console.log("totalPage= "+this.totalPages)
 
         const paginationData = {
             currentPage,

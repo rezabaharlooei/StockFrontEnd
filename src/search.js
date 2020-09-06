@@ -10,6 +10,7 @@ class Search extends Component {
         super(props);
         this.backendUri = 'http://localhost:8000';
         this.searchApi = '/search/posts/?';
+        this.aggsApi = '/aggs/count'
         this.state = {
             currentPosts: [],
             response: {},
@@ -21,32 +22,37 @@ class Search extends Component {
             filteredSenderName: "",
             filteredMessageDateGte: "",
             filteredMessageDateLte: "",
-            show: false,
-            data: {},
+            modalShow: false,
+            modalData: {},
             queryParam: '',
-            currentPage: null,
+            currentPage: 1,
             totalPages: null,
-            totalPosts:0
-
-      };
+            totalPosts: 0,
+            filteredMessageDateGteForAgg: "",
+            filteredSenderUsernameForAgg: "",
+            filteredChannelUsernameForAgg: "",
+            filteredStockInChannelsForAgg: "",
+            filteredStockInPersonsForAgg: "",
+            aggsResults: []
+        }
     }
 
     componentDidMount() {
-         this.makeApiCall(this.backendUri + this.searchApi);
+        this.handleSearch();
     }
 
     handleShow = (event, post) => {
 
         this.setState({
-            show: true,
-            data: post,
+            modalShow: true,
+            modalData: post,
         });
     };
 
 
     handleClose = (fromModal) => {
         this.setState({
-            show: false
+            modalShow: false
         });
     };
 
@@ -81,6 +87,46 @@ class Search extends Component {
     handleMessageDateToOnChange = event => {
         this.setState({filteredMessageDateLte: event.target.value})
     }
+
+    handleMessageDateFromAggOnChange = event => {
+        this.setState({filteredMessageDateGteForAgg: event.target.value});
+        this.setState({filteredSenderUsernameForAgg: ''})
+        this.setState({filteredChannelUsernameForAgg: ''})
+        this.setState({filteredStockInChannelsForAgg: ''})
+        this.setState({filteredStockInPersonsForAgg: ''})
+
+    }
+    handleSenderUserameAggOnChange = event => {
+        this.setState({filteredSenderUsernameForAgg: event.target.value})
+        this.setState({filteredChannelUsernameForAgg: ''})
+        this.setState({filteredMessageDateGteForAgg: ''});
+        this.setState({filteredStockInChannelsForAgg: ''})
+        this.setState({filteredStockInPersonsForAgg: ''})
+    }
+    handleChannelUserameAggOnChange = event => {
+        this.setState({filteredChannelUsernameForAgg: event.target.value})
+        this.setState({filteredSenderUsernameForAgg: ''})
+        this.setState({filteredMessageDateGteForAgg: ''});
+        this.setState({filteredStockInChannelsForAgg: ''})
+        this.setState({filteredStockInPersonsForAgg: ''})
+    }
+
+    handleStockInChannelsAggOnChange = event => {
+        this.setState({filteredStockInChannelsForAgg: event.target.value});
+        this.setState({filteredChannelUsernameForAgg: ''});
+        this.setState({filteredSenderUsernameForAgg: ''});
+        this.setState({filteredMessageDateGteForAgg: ''});
+        this.setState({filteredStockInPersonsForAgg: ''});
+    }
+
+    handleStockInPersonsAggOnChange = event => {
+        this.setState({filteredStockInPersonsForAgg: event.target.value});
+        this.setState({filteredStockInChannelsForAgg: ''});
+        this.setState({filteredChannelUsernameForAgg: ''});
+        this.setState({filteredSenderUsernameForAgg: ''});
+        this.setState({filteredMessageDateGteForAgg: ''});
+    }
+
     handleSearch = () => {
 
         var tempQueryParam = '';
@@ -109,8 +155,47 @@ class Search extends Component {
             tempQueryParam = tempQueryParam + '&messageDate__lte=' + this.state.filteredMessageDateLte;
         }
         this.setState({queryParam: tempQueryParam})
-        this.makeApiCall(this.backendUri + this.searchApi + tempQueryParam);
+        this.makeApiCall(this.backendUri + this.searchApi + '&ordering=-messageDate' + tempQueryParam);
+        this.setState({currentPage: 1})
     };
+    handleAggsSearch = () => {
+        let tempQueryParam = '';
+        if (this.state.filteredMessageDateGteForAgg) {
+            tempQueryParam = '/date?messageDateFrom=' + this.state.filteredMessageDateGteForAgg;
+        }
+        if (this.state.filteredSenderUsernameForAgg) {
+            tempQueryParam = '/sender?senderUsername=' + this.state.filteredSenderUsernameForAgg;
+        }
+        if (this.state.filteredChannelUsernameForAgg) {
+            tempQueryParam = '/channel?channelUsername=' + this.state.filteredChannelUsernameForAgg;
+        }
+        if (this.state.filteredStockInChannelsForAgg) {
+            tempQueryParam = '/channelByStock?stock=' + this.state.filteredStockInChannelsForAgg;
+        }
+        if(this.state.filteredStockInPersonsForAgg){
+            tempQueryParam = '/personByStock?stock='+this.state.filteredStockInPersonsForAgg;
+        }
+        this.makeApiCallForAggs(this.backendUri + this.aggsApi + tempQueryParam);
+    }
+
+    makeApiCallForAggs = (searchUrl) => {
+        let headers = new Headers();
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json');
+        fetch(searchUrl, {
+            method: 'GET',
+            headers: headers,
+        })
+            .then(res => res.json())
+            .then((data) => {
+                console.log(data);
+                this.setState({aggsResults: data.results})
+
+
+            })
+            .catch(console.log)
+
+    }
 
 
     makeApiCall = searchUrl => {
@@ -124,10 +209,11 @@ class Search extends Component {
         })
             .then(res => res.json())
             .then((data) => {
-                 this.setState({currentPosts: data.results})
-                 this.setState({response: data})
-                 this.setState({totalPosts : data.count})
-                 this.setState({totalPages:Math.ceil(data.count/2)})
+                this.setState({currentPosts: data.results})
+                this.setState({response: data})
+                this.setState({totalPosts: data.count})
+                this.setState({totalPages: Math.ceil(data.count / 20)})
+
             })
             .catch(console.log)
 
@@ -136,25 +222,127 @@ class Search extends Component {
     onPageChanged = data => {
         const {currentPage, totalPages} = data;
         var searhcUri = this.backendUri + this.searchApi + this.state.queryParam + "&page=" + currentPage;
-        const response = this.makeApiCall(searhcUri);
-        this.setState({response:response})
-        // this.setState({totalPages:Math.ceil(this.state.response)})
+        this.makeApiCall(searhcUri);
         this.setState({currentPage, totalPages});
     }
 
 
     render() {
         let totalPosts = this.state.totalPosts;
-        if (totalPosts === 0) return null;
         const {currentPage, totalPages} = this.state;
-        const style = totalPosts > 2 ? {} : {display: 'none'};
 
         const headerClass = ['text-dark py-2 pr-4 m-0', currentPage ? 'border-gray border-right' : ''].join(' ').trim();
         return (
             <div>
                 <div className="jumbotron text-center">
-                    <h1>Welcome to stock public opinion analyzer </h1>
+                    <h1>Stock In Social Networks Monitoring</h1>
                 </div>
+
+                {/*aggregation part*/}
+                <div id='aggsPanel' className="container p-3 my-3 border">
+
+                    <div className='row'>
+                        <div className='column'>
+                            <div className="row">
+                                <div className="col-sm-10">
+                                    <div className="input-group mb-3">
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text">Message Date From</span>
+                                        </div>
+                                        <input type="datetime-local" className="form-control" id="messageDateFromForAgg"
+                                               onChange={event => this.handleMessageDateFromAggOnChange(event)}
+                                               value={this.state.filteredMessageDateGteForAgg}/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='row'>
+                                <div className="col-sm-10">
+                                    <div className="input-group mb-3">
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text">Sender Username</span>
+                                        </div>
+                                        <input type="text" className="form-control"
+                                               placeholder='aggregation on username'
+                                               onChange={event => this.handleSenderUserameAggOnChange(event)}
+                                               value={this.state.filteredSenderUsernameForAgg}/>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div className='row'>
+                                <div className="col-sm-10">
+                                    <div className="input-group mb-3">
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text">Channel Username</span>
+                                        </div>
+                                        <input type="text" className="form-control"
+                                               placeholder='aggregation on stock in channel'
+                                               onChange={event => this.handleChannelUserameAggOnChange(event)}
+                                               value={this.state.filteredChannelUsernameForAgg}/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='row'>
+                                <div className="col-sm-10">
+                                    <div className="input-group mb-3">
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text">Stock In Channels</span>
+                                        </div>
+                                        <input type="text" className="form-control"
+                                               placeholder='aggregation on channel by stock'
+                                               onChange={event => this.handleStockInChannelsAggOnChange(event)}
+                                               value={this.state.filteredStockInChannelsForAgg}/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='row'>
+                                <div className="col-sm-10">
+                                    <div className="input-group mb-3">
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text">Stock In Persons</span>
+                                        </div>
+                                        <input type="text" className="form-control"
+                                               placeholder='aggregation on channel by stock'
+                                               onChange={event => this.handleStockInPersonsAggOnChange(event)}
+                                               value={this.state.filteredStockInPersonsForAgg}/>
+                                    </div>
+                                </div>
+                                <div className="col-sm-2">
+                                    <button type="button" className="btn btn-primary btn-md"
+                                            onClick={this.handleAggsSearch}>Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='column'>
+                            <table className="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Stock/Sender/Group</th>
+                                    <th>Count</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {this.state.aggsResults.length !== 0 ? (this.state.aggsResults.map((res) => (
+                                    <tr>
+                                        <td>{res[0]}</td>
+                                        <td>{res[1]}</td>
+
+                                    </tr>
+                                ))) : (
+                                    <div className="text-center">
+
+                                    </div>
+
+                                )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+
 
                 <div id='searchPanel' className="container p-3 my-3 border">
                     <div className="row">
@@ -276,7 +464,7 @@ class Search extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                        {this.state.response ? (this.state.currentPosts.map((post) => (
+                        {totalPosts !== 0 ? (this.state.currentPosts.map((post) => (
                             <tr>
                                 <td>{post.stock}</td>
                                 <td>{post.source}</td>
@@ -292,22 +480,25 @@ class Search extends Component {
                                 </td>
                             </tr>
                         ))) : (
-                            <p>Try searching for a meal</p>
+                            <div className="text-center">
+
+                            </div>
+
                         )}
                         </tbody>
                     </table>
 
                     <MyModalComponent
-                        show={this.state.show}
-                        data={this.state.data}
+                        show={this.state.modalShow}
+                        data={this.state.modalData}
                         onClick={this.handleClose}
                         onHide={this.handleClose}/>
 
                 </div>
 
                 <div id='footer' className="container p-3 my-3 border">
-                    <div className="w-100 px-4 py-5 d-flex flex-row flex-wrap align-items-center justify-content-between"
-                         style={style}>
+                    <div
+                        className="w-100 px-4 py-5 d-flex flex-row flex-wrap align-items-center justify-content-between">
                         <div className="d-flex flex-row align-items-center">
                             <h2 className={headerClass}>
                                 <strong className="text-secondary">{totalPosts}</strong> Posts
@@ -322,7 +513,7 @@ class Search extends Component {
                         </div>
 
                         <div className="d-flex flex-row py-4 align-items-center">
-                            <Pagination totalRecords={totalPosts} pageNeighbours={1} pageLimit={2}
+                            <Pagination totalRecords={totalPosts} pageNeighbours={1} pageLimit={20}
                                         onPageChanged={this.onPageChanged}/>
                         </div>
                     </div>
