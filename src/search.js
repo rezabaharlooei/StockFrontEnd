@@ -302,7 +302,7 @@ class Search extends Component {
                                             <span className="input-group-text">Stock In Persons</span>
                                         </div>
                                         <input type="text" className="form-control"
-                                               placeholder='aggregation on channel by stock'
+                                               placeholder='aggregation on persons by stock'
                                                onChange={event => this.handleStockInPersonsAggOnChange(event)}
                                                value={this.state.filteredStockInPersonsForAgg}/>
                                     </div>
